@@ -8,38 +8,64 @@ import uuid
 
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY', 'your-secret-key-change-in-production')
-app.config['UPLOAD_FOLDER'] = 'uploads'
 app.config['MAX_CONTENT_LENGTH'] = 5 * 1024 * 1024  # 5MB max file size
 app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg', 'gif', 'webp'}
 
-# Créer les dossiers nécessaires
-os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
-os.makedirs('data', exist_ok=True)
+# Vercel utilise un système de fichiers read-only, utiliser /tmp pour les fichiers
+IS_VERCEL = os.environ.get('VERCEL', '0') == '1'
+if IS_VERCEL:
+    BASE_DIR = '/tmp'
+    app.config['UPLOAD_FOLDER'] = '/tmp/uploads'
+    PLAYERS_FILE = '/tmp/data/players.json'
+    BRACKET_FILE = '/tmp/data/bracket.json'
+    ADMIN_FILE = '/tmp/data/admin.json'
+else:
+    BASE_DIR = '.'
+    app.config['UPLOAD_FOLDER'] = 'uploads'
+    PLAYERS_FILE = 'data/players.json'
+    BRACKET_FILE = 'data/bracket.json'
+    ADMIN_FILE = 'data/admin.json'
 
-# Fichiers de données
-PLAYERS_FILE = 'data/players.json'
-BRACKET_FILE = 'data/bracket.json'
-ADMIN_FILE = 'data/admin.json'
+# Créer les dossiers nécessaires (avec gestion d'erreurs)
+def ensure_dirs():
+    try:
+        os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+        os.makedirs(os.path.dirname(PLAYERS_FILE), exist_ok=True)
+    except (OSError, PermissionError) as e:
+        print(f"Warning: Could not create directories: {e}")
+
+ensure_dirs()
 
 # Initialiser les fichiers JSON s'ils n'existent pas
 def init_data_files():
-    if not os.path.exists(PLAYERS_FILE):
-        with open(PLAYERS_FILE, 'w', encoding='utf-8') as f:
-            json.dump([], f)
-    if not os.path.exists(BRACKET_FILE):
-        with open(BRACKET_FILE, 'w', encoding='utf-8') as f:
-            json.dump({
-                'quarterfinals': [],
-                'semifinals': [],
-                'final': None,
-                'winner': None
-            }, f)
-    if not os.path.exists(ADMIN_FILE):
-        with open(ADMIN_FILE, 'w', encoding='utf-8') as f:
-            json.dump({
-                'username': 'admin',
-                'password': generate_password_hash('admin123')  # Changez en production
-            }, f)
+    try:
+        if not os.path.exists(PLAYERS_FILE):
+            with open(PLAYERS_FILE, 'w', encoding='utf-8') as f:
+                json.dump([], f)
+    except (OSError, PermissionError) as e:
+        print(f"Warning: Could not create {PLAYERS_FILE}: {e}")
+    
+    try:
+        if not os.path.exists(BRACKET_FILE):
+            with open(BRACKET_FILE, 'w', encoding='utf-8') as f:
+                json.dump({
+                    'quarterfinals': [],
+                    'semifinals': [],
+                    'final': None,
+                    'winner': None
+                }, f)
+    except (OSError, PermissionError) as e:
+        print(f"Warning: Could not create {BRACKET_FILE}: {e}")
+    
+    try:
+        if not os.path.exists(ADMIN_FILE):
+            with open(ADMIN_FILE, 'w', encoding='utf-8') as f:
+                json.dump({
+                    'username': 'admin',
+                    'password': generate_password_hash('admin123')  # Changez en production
+                }, f)
+    except (OSError, PermissionError) as e:
+        print(f"Warning: Could not create {ADMIN_FILE}: {e}")
 
 init_data_files()
 
@@ -47,20 +73,60 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
 
 def get_players():
-    with open(PLAYERS_FILE, 'r', encoding='utf-8') as f:
-        return json.load(f)
+    try:
+        if os.path.exists(PLAYERS_FILE):
+            with open(PLAYERS_FILE, 'r', encoding='utf-8') as f:
+                return json.load(f)
+    except (OSError, json.JSONDecodeError) as e:
+        print(f"Error reading players: {e}")
+    return []
 
 def save_players(players):
-    with open(PLAYERS_FILE, 'w', encoding='utf-8') as f:
-        json.dump(players, f, ensure_ascii=False, indent=2)
+    try:
+        ensure_dirs()
+        with open(PLAYERS_FILE, 'w', encoding='utf-8') as f:
+            json.dump(players, f, ensure_ascii=False, indent=2)
+    except (OSError, PermissionError) as e:
+        print(f"Error saving players: {e}")
+        # En cas d'erreur sur Vercel, on ne peut pas sauvegarder
+        # Les données seront perdues entre les invocations
+        pass
 
 def get_bracket():
-    with open(BRACKET_FILE, 'r', encoding='utf-8') as f:
-        return json.load(f)
+    try:
+        if os.path.exists(BRACKET_FILE):
+            with open(BRACKET_FILE, 'r', encoding='utf-8') as f:
+                return json.load(f)
+    except (OSError, json.JSONDecodeError) as e:
+        print(f"Error reading bracket: {e}")
+    return {
+        'quarterfinals': [],
+        'semifinals': [],
+        'final': None,
+        'winner': None
+    }
 
 def save_bracket(bracket):
-    with open(BRACKET_FILE, 'w', encoding='utf-8') as f:
-        json.dump(bracket, f, ensure_ascii=False, indent=2)
+    try:
+        ensure_dirs()
+        with open(BRACKET_FILE, 'w', encoding='utf-8') as f:
+            json.dump(bracket, f, ensure_ascii=False, indent=2)
+    except (OSError, PermissionError) as e:
+        print(f"Error saving bracket: {e}")
+        pass
+
+def get_admin_data():
+    try:
+        if os.path.exists(ADMIN_FILE):
+            with open(ADMIN_FILE, 'r', encoding='utf-8') as f:
+                return json.load(f)
+    except (OSError, json.JSONDecodeError) as e:
+        print(f"Error reading admin: {e}")
+    # Valeurs par défaut si le fichier n'existe pas
+    return {
+        'username': 'admin',
+        'password': generate_password_hash('admin123')
+    }
 
 def is_admin():
     return session.get('admin_logged_in', False)
@@ -108,11 +174,17 @@ def register():
         if 'screenshot' in request.files:
             file = request.files['screenshot']
             if file and file.filename and allowed_file(file.filename):
-                filename = secure_filename(file.filename)
-                unique_filename = f"{uuid.uuid4()}_{filename}"
-                filepath = os.path.join(app.config['UPLOAD_FOLDER'], unique_filename)
-                file.save(filepath)
-                screenshot_filename = unique_filename
+                try:
+                    ensure_dirs()
+                    filename = secure_filename(file.filename)
+                    unique_filename = f"{uuid.uuid4()}_{filename}"
+                    filepath = os.path.join(app.config['UPLOAD_FOLDER'], unique_filename)
+                    file.save(filepath)
+                    screenshot_filename = unique_filename
+                except (OSError, PermissionError) as e:
+                    print(f"Error saving file: {e}")
+                    flash('Erreur lors de l\'upload du fichier. Veuillez réessayer.', 'error')
+                    return render_template('register.html')
         
         # Créer le joueur
         new_player = {
@@ -161,8 +233,7 @@ def admin_login():
         username = request.form.get('username', '').strip()
         password = request.form.get('password', '')
         
-        with open(ADMIN_FILE, 'r', encoding='utf-8') as f:
-            admin_data = json.load(f)
+        admin_data = get_admin_data()
         
         if username == admin_data['username'] and check_password_hash(admin_data['password'], password):
             session['admin_logged_in'] = True
@@ -323,7 +394,11 @@ def update_bracket():
 
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
-    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+    try:
+        return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+    except Exception as e:
+        print(f"Error serving file: {e}")
+        return "File not found", 404
 
 if __name__ == '__main__':
     app.run(debug=True)
