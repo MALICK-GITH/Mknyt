@@ -18,9 +18,38 @@
 body {
     font-family: 'Poppins', sans-serif;
     background-color: var(--bg-dark);
-    color: var(--text-white);
+    color: #ffffff !important;
     min-height: 100vh;
     padding-top: 70px;
+}
+
+/* Forcer la couleur du texte pour tous les éléments */
+p, h1, h2, h3, h4, h5, h6, span, div, li, td, th, label, small, strong, em {
+    color: inherit;
+}
+
+/* Classes de texte Bootstrap avec !important */
+.text-white {
+    color: #ffffff !important;
+}
+
+.text-white-50 {
+    color: rgba(255, 255, 255, 0.85) !important;
+}
+
+/* Headings visibles */
+h1, h2, h3, h4, h5, h6 {
+    color: #ffffff !important;
+}
+
+/* Paragraphes visibles */
+p, div, span, li {
+    color: rgba(255, 255, 255, 0.95) !important;
+}
+
+/* Labels visibles */
+label, .form-label {
+    color: #ffffff !important;
 }
 
 /* Navigation */
@@ -37,13 +66,21 @@ body {
 }
 
 .nav-link {
-    color: var(--text-white) !important;
+    color: #ffffff !important;
     font-weight: 500;
     transition: color 0.3s ease;
 }
 
 .nav-link:hover {
     color: var(--accent-yellow) !important;
+}
+
+.nav-link:focus {
+    color: #ffffff !important;
+}
+
+.nav-link.active {
+    color: #ffffff !important;
 }
 
 /* Cards */
@@ -156,15 +193,19 @@ body {
 .form-control {
     background-color: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.2);
-    color: var(--text-white);
+    color: #ffffff !important;
     border-radius: 10px;
 }
 
 .form-control:focus {
     background-color: rgba(255, 255, 255, 0.15);
     border-color: var(--accent-yellow);
-    color: var(--text-white);
+    color: #ffffff !important;
     box-shadow: 0 0 0 0.2rem rgba(255, 204, 0, 0.25);
+}
+
+.form-control::placeholder {
+    color: rgba(255, 255, 255, 0.6) !important;
 }
 
 .form-label {
@@ -236,7 +277,7 @@ body {
 }
 
 .nav-tabs .nav-link {
-    color: var(--text-white-50);
+    color: rgba(255, 255, 255, 0.8) !important;
     border: none;
     border-bottom: 3px solid transparent;
     transition: all 0.3s ease;
@@ -244,11 +285,11 @@ body {
 
 .nav-tabs .nav-link:hover {
     border-bottom-color: var(--accent-yellow);
-    color: var(--accent-yellow);
+    color: var(--accent-yellow) !important;
 }
 
 .nav-tabs .nav-link.active {
-    color: var(--accent-yellow);
+    color: var(--accent-yellow) !important;
     background-color: transparent;
     border-bottom-color: var(--accent-yellow);
 }
@@ -259,11 +300,12 @@ body {
 
 .table-dark th {
     border-color: rgba(255, 204, 0, 0.2);
-    color: var(--accent-yellow);
+    color: var(--accent-yellow) !important;
 }
 
 .table-dark td {
     border-color: rgba(255, 255, 255, 0.1);
+    color: #ffffff !important;
 }
 
 .table-hover tbody tr:hover {
@@ -308,6 +350,14 @@ body {
 footer {
     margin-top: auto;
     border-top: 1px solid rgba(255, 204, 0, 0.2);
+}
+
+footer p {
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.bg-dark-custom {
+    background-color: var(--bg-darker) !important;
 }
 
 /* Responsive */
