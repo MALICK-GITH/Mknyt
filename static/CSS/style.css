@@ -1,0 +1,384 @@
+/* Custom Styles for eFootKings 2026 */
+
+:root {
+    --bg-dark: #111;
+    --bg-darker: #0a0a0a;
+    --text-white: #fff;
+    --text-white-50: rgba(255, 255, 255, 0.5);
+    --accent-yellow: #ffcc00;
+    --accent-yellow-dark: #e6b800;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-white);
+    min-height: 100vh;
+    padding-top: 70px;
+}
+
+/* Navigation */
+.navbar {
+    background-color: var(--bg-darker) !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    padding: 1rem 0;
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--accent-yellow) !important;
+}
+
+.nav-link {
+    color: var(--text-white) !important;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: var(--accent-yellow) !important;
+}
+
+/* Cards */
+.card-custom {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+    border: 1px solid rgba(255, 204, 0, 0.2);
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-custom:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(255, 204, 0, 0.2);
+}
+
+/* Hero Section */
+.hero-section {
+    background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-darker) 100%);
+    padding: 4rem 0;
+}
+
+/* Tournament Images */
+.tournament-images {
+    padding: 3rem 0;
+}
+
+.image-card {
+    overflow: hidden;
+    border-radius: 15px;
+    transition: transform 0.3s ease;
+}
+
+.image-card:hover {
+    transform: scale(1.05);
+}
+
+.image-card img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.image-card:hover img {
+    transform: scale(1.1);
+}
+
+/* Rules Section */
+.rules-section {
+    padding: 3rem 0;
+}
+
+.rules-list {
+    list-style: none;
+    padding: 0;
+}
+
+.rules-list li {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 1.1rem;
+}
+
+.rules-list li:last-child {
+    border-bottom: none;
+}
+
+/* Payment Info */
+.payment-info {
+    border: 2px solid var(--accent-yellow);
+    border-radius: 10px;
+}
+
+/* Buttons */
+.btn-warning {
+    background-color: var(--accent-yellow);
+    border-color: var(--accent-yellow);
+    color: #000;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-warning:hover {
+    background-color: var(--accent-yellow-dark);
+    border-color: var(--accent-yellow-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 204, 0, 0.4);
+}
+
+.btn-outline-warning {
+    border-color: var(--accent-yellow);
+    color: var(--accent-yellow);
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-warning:hover {
+    background-color: var(--accent-yellow);
+    border-color: var(--accent-yellow);
+    color: #000;
+    transform: translateY(-2px);
+}
+
+/* Register Section */
+.register-section {
+    padding: 3rem 0;
+}
+
+.form-control {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--text-white);
+    border-radius: 10px;
+}
+
+.form-control:focus {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-color: var(--accent-yellow);
+    color: var(--text-white);
+    box-shadow: 0 0 0 0.2rem rgba(255, 204, 0, 0.25);
+}
+
+.form-label {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+/* Bracket Section */
+.bracket-section {
+    padding: 3rem 0;
+}
+
+.match-card {
+    margin-bottom: 2rem;
+    transition: all 0.3s ease;
+}
+
+.match-card:hover {
+    border-color: var(--accent-yellow);
+}
+
+.score-badge {
+    padding: 0.5rem 1rem;
+    border-radius: 50%;
+    font-weight: 700;
+    font-size: 1.2rem;
+    min-width: 50px;
+    text-align: center;
+}
+
+.winner-badge {
+    margin-top: 1rem;
+}
+
+.champion-badge {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+.final-match {
+    border: 3px solid var(--accent-yellow);
+    background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+}
+
+/* Admin Dashboard */
+.admin-dashboard {
+    padding: 3rem 0;
+}
+
+.stat-card {
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+}
+
+.nav-tabs {
+    border-bottom: 2px solid rgba(255, 204, 0, 0.3);
+}
+
+.nav-tabs .nav-link {
+    color: var(--text-white-50);
+    border: none;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.nav-tabs .nav-link:hover {
+    border-bottom-color: var(--accent-yellow);
+    color: var(--accent-yellow);
+}
+
+.nav-tabs .nav-link.active {
+    color: var(--accent-yellow);
+    background-color: transparent;
+    border-bottom-color: var(--accent-yellow);
+}
+
+.table-dark {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.table-dark th {
+    border-color: rgba(255, 204, 0, 0.2);
+    color: var(--accent-yellow);
+}
+
+.table-dark td {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(255, 204, 0, 0.1);
+}
+
+.match-admin-card {
+    margin-bottom: 1rem;
+}
+
+/* Alerts */
+.alert {
+    border-radius: 10px;
+    border: none;
+}
+
+.alert-warning {
+    background-color: rgba(255, 204, 0, 0.2);
+    color: var(--text-white);
+    border-left: 4px solid var(--accent-yellow);
+}
+
+.alert-success {
+    background-color: rgba(40, 167, 69, 0.2);
+    color: var(--text-white);
+    border-left: 4px solid #28a745;
+}
+
+.alert-danger {
+    background-color: rgba(220, 53, 69, 0.2);
+    color: var(--text-white);
+    border-left: 4px solid #dc3545;
+}
+
+.alert-info {
+    background-color: rgba(23, 162, 184, 0.2);
+    color: var(--text-white);
+    border-left: 4px solid #17a2b8;
+}
+
+/* Footer */
+footer {
+    margin-top: auto;
+    border-top: 1px solid rgba(255, 204, 0, 0.2);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero-section h1 {
+        font-size: 2rem;
+    }
+    
+    .display-3 {
+        font-size: 2.5rem;
+    }
+    
+    .card-custom {
+        margin-bottom: 1.5rem;
+    }
+    
+    .image-card {
+        margin-bottom: 1.5rem;
+    }
+    
+    .table-responsive {
+        font-size: 0.9rem;
+    }
+}
+
+/* Animations */
+.animate__animated {
+    animation-duration: 1s;
+}
+
+/* Loading states */
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Image preview */
+#imagePreview img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+/* Badge styles */
+.badge {
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+}
+
+/* VS Divider */
+.vs-divider {
+    font-weight: 700;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+}
+
+/* Scrollbar customization */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-dark);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--accent-yellow);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-yellow-dark);
+}
+
