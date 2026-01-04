@@ -17,38 +17,60 @@
 
 body {
     font-family: 'Poppins', sans-serif;
-    background-color: var(--bg-dark);
+    background-color: var(--bg-dark) !important;
     color: #ffffff !important;
     min-height: 100vh;
     padding-top: 70px;
 }
 
-/* Forcer la couleur du texte pour tous les éléments */
-p, h1, h2, h3, h4, h5, h6, span, div, li, td, th, label, small, strong, em {
-    color: inherit;
-}
-
-/* Classes de texte Bootstrap avec !important */
+/* Classes Bootstrap - FORCER avec !important */
 .text-white {
     color: #ffffff !important;
 }
 
 .text-white-50 {
-    color: rgba(255, 255, 255, 0.85) !important;
+    color: rgba(255, 255, 255, 0.9) !important;
 }
 
-/* Headings visibles */
+/* Headings - tous les niveaux */
 h1, h2, h3, h4, h5, h6 {
     color: #ffffff !important;
 }
 
-/* Paragraphes visibles */
-p, div, span, li {
-    color: rgba(255, 255, 255, 0.95) !important;
+.h1, .h2, .h3, .h4, .h5, .h6 {
+    color: #ffffff !important;
 }
 
-/* Labels visibles */
-label, .form-label {
+.display-1, .display-2, .display-3, .display-4, .display-5, .display-6 {
+    color: #ffffff !important;
+}
+
+/* Paragraphes */
+p {
+    color: #ffffff !important;
+}
+
+.lead {
+    color: #ffffff !important;
+}
+
+/* Listes */
+li {
+    color: #ffffff !important;
+}
+
+/* Labels et formulaires */
+label, .form-label, .form-text {
+    color: #ffffff !important;
+}
+
+/* Textes dans les cartes */
+.card-custom, .card-custom p, .card-custom div, .card-custom span, .card-custom li {
+    color: #ffffff !important;
+}
+
+/* Sections */
+section p, section div, section span, section li {
     color: #ffffff !important;
 }
 
@@ -71,7 +93,11 @@ label, .form-label {
     transition: color 0.3s ease;
 }
 
-.nav-link:hover {
+.nav-link, .nav-link i {
+    color: #ffffff !important;
+}
+
+.nav-link:hover, .nav-link:hover i {
     color: var(--accent-yellow) !important;
 }
 
@@ -81,6 +107,14 @@ label, .form-label {
 
 .nav-link.active {
     color: #ffffff !important;
+}
+
+/* Forcer la visibilité du lien Admin */
+.nav-link[href*="admin"] {
+    color: #ffffff !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
 
 /* Cards */
@@ -218,6 +252,14 @@ label, .form-label {
     padding: 3rem 0;
 }
 
+.bracket-container {
+    color: #ffffff !important;
+}
+
+.bracket-container p, .bracket-container div, .bracket-container span, .bracket-container h1, .bracket-container h2, .bracket-container h3, .bracket-container h4 {
+    color: #ffffff !important;
+}
+
 .match-card {
     margin-bottom: 2rem;
     transition: all 0.3s ease;
@@ -225,6 +267,10 @@ label, .form-label {
 
 .match-card:hover {
     border-color: var(--accent-yellow);
+}
+
+.match-card p, .match-card div, .match-card span {
+    color: #ffffff !important;
 }
 
 .score-badge {
@@ -263,6 +309,18 @@ label, .form-label {
     padding: 3rem 0;
 }
 
+.admin-dashboard p, .admin-dashboard div, .admin-dashboard span, .admin-dashboard h1, .admin-dashboard h2, .admin-dashboard h3, .admin-dashboard h4, .admin-dashboard h5, .admin-dashboard h6 {
+    color: #ffffff !important;
+}
+
+.admin-login-section {
+    padding: 3rem 0;
+}
+
+.admin-login-section p, .admin-login-section div, .admin-login-section span, .admin-login-section h1, .admin-login-section h2, .admin-login-section h3 {
+    color: #ffffff !important;
+}
+
 .stat-card {
     text-align: center;
     transition: transform 0.3s ease;
@@ -270,6 +328,10 @@ label, .form-label {
 
 .stat-card:hover {
     transform: translateY(-5px);
+}
+
+.stat-card h3, .stat-card small {
+    color: #ffffff !important;
 }
 
 .nav-tabs {
@@ -323,27 +385,32 @@ label, .form-label {
 }
 
 .alert-warning {
-    background-color: rgba(255, 204, 0, 0.2);
-    color: var(--text-white);
+    background-color: rgba(255, 204, 0, 0.2) !important;
+    color: #ffffff !important;
     border-left: 4px solid var(--accent-yellow);
 }
 
 .alert-success {
-    background-color: rgba(40, 167, 69, 0.2);
-    color: var(--text-white);
+    background-color: rgba(40, 167, 69, 0.2) !important;
+    color: #ffffff !important;
     border-left: 4px solid #28a745;
 }
 
 .alert-danger {
-    background-color: rgba(220, 53, 69, 0.2);
-    color: var(--text-white);
+    background-color: rgba(220, 53, 69, 0.2) !important;
+    color: #ffffff !important;
     border-left: 4px solid #dc3545;
 }
 
 .alert-info {
-    background-color: rgba(23, 162, 184, 0.2);
-    color: var(--text-white);
+    background-color: rgba(23, 162, 184, 0.2) !important;
+    color: #ffffff !important;
     border-left: 4px solid #17a2b8;
+}
+
+/* Forcer le texte dans les alertes */
+.alert p, .alert div, .alert span, .alert strong {
+    color: #ffffff !important;
 }
 
 /* Footer */
@@ -405,6 +472,19 @@ footer p {
 .badge {
     padding: 0.5rem 1rem;
     font-weight: 600;
+}
+
+/* Badges avec texte sombre (pour fond clair) */
+.badge.bg-warning, .badge.bg-success, .badge.bg-info {
+    color: #000000 !important;
+}
+
+.badge.text-dark {
+    color: #000000 !important;
+}
+
+.badge.bg-secondary {
+    color: #ffffff !important;
 }
 
 /* VS Divider */
